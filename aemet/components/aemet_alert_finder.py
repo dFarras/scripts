@@ -1,5 +1,5 @@
 import requests
-from aemet.configuration.secrets.AemetApiKey import aemet_api_key
+from aemet.configuration.secrets.aemet import api_key as aemet_api_key
 import aemet.configuration.aemet_constants as constants
 from aemet.dtos.aemet_hateoas_response import AemetHateoasResponse
 
