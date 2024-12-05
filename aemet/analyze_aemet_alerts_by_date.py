@@ -1,4 +1,4 @@
-import aemet.components.aemet_constants as constants
+import aemet.configuration.aemet_constants as constants
 import aemet.components.aemet_initializer as aemet_init
 import aemet.components.aemet_alert_finder as aemet_alerts
 import aemet.components.aemet_alert_classifier as aemet_classifier

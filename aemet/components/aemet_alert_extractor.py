@@ -1,6 +1,6 @@
 from aemet.dtos.aemet_alert_csv_data import AemetAlertCsvData
-import aemet.components.aemet_constants as constants
-import xml.etree.ElementTree as ET
+import aemet.configuration.aemet_constants as constants
+
 
 def extract_key_or_null(root_xml, target_key):
     try:

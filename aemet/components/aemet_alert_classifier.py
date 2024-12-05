@@ -1,7 +1,7 @@
 import os
 import shutil
 import tarfile
-import aemet.components.aemet_constants as constants
+import aemet.configuration.aemet_constants as constants
 import xml.etree.ElementTree as ET
 import utils.tar_files as tarfiles
 

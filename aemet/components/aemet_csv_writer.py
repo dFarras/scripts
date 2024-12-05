@@ -1,6 +1,6 @@
 import csv
 import os
-import aemet.components.aemet_constants as constants
+import aemet.configuration.aemet_constants as constants
 import aemet.components.aemet_alert_extractor as csv_data_extractor
 import xml.etree.ElementTree as ET
 

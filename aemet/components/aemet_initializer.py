@@ -1,6 +1,6 @@
 import os
 import shutil
-import aemet.components.aemet_constants as constants
+import aemet.configuration.aemet_constants as constants
 
 def init_folders():
     print("Starting folder initialization")

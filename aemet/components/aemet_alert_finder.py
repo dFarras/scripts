@@ -1,6 +1,6 @@
 import requests
-from configuration.secrets.AemetApiKey import aemet_api_key
-import aemet.components.aemet_constants as constants
+from aemet.configuration.secrets.AemetApiKey import aemet_api_key
+import aemet.configuration.aemet_constants as constants
 from aemet.dtos.aemet_hateoas_response import AemetHateoasResponse
 
 api_key = aemet_api_key
