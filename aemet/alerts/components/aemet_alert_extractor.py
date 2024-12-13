@@ -1,15 +1,15 @@
-from aemet.dtos.aemet_alert_csv_data import AemetAlertCsvData
-import aemet.configuration.aemet_constants as constants
+from aemet.alerts.dtos.aemet_alert_csv_data import AemetAlertCsvData
+import aemet.constants.aemet_alert_constants as constants
 
 
 def extract_key_or_null(root_xml, target_key):
     try:
-        return root_xml.find(target_key, namespaces=constants.aemet_xml_namespace).text
+        return root_xml.find(target_key, namespaces=constants.alerts_xml_namespace).text
     except Exception as e:
-        return "No data available"
+        return f"No data available, error {e}"
 
 def extract_csv_data_from_xml(root_xml):
-    alert_type = root_xml.find(constants.type, namespaces=constants.aemet_xml_namespace).text
+    alert_type = root_xml.find(constants.type, namespaces=constants.alerts_xml_namespace).text
 
     try:
         severity = extract_key_or_null(root_xml, constants.severity_key)
