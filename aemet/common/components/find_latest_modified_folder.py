@@ -5,10 +5,12 @@ def get_last_modified_folder(path):
     folders = [os.path.join(path, folder) for folder in os.listdir(path) if os.path.isdir(os.path.join(path, folder))]
 
     if not folders:
+        print("platirinchus")
         return None
 
     last_modified_folder = max(folders, key=os.path.getmtime)
 
+    print(os.path.basename(last_modified_folder).__str__())
     return os.path.basename(last_modified_folder)
 
 def get_folders_order_by_last_modified(path):

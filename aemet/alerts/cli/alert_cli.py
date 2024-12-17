@@ -7,16 +7,18 @@ from aemet.alerts.operations.write_csv import write_aemet_alert_report
 from aemet.common.components.find_latest_modified_folder import get_last_modified_folder
 from aemet.common.components.folder_param_choice import FolderParamChoice
 import aemet.constants.aemet_constants as constants
+import aemet.constants.aemet_alert_constants as alert_constants
 
 base_data_folder = constants.base_data_folder
 alerts_responses_base_folder = constants.alerts_responses_path
+alerts_response_file_name = alert_constants.alerts_response_file_name
 alerts_results_base_path = constants.alerts_results_path
 
 @click.group()
 def alert():
     pass
 
-@alert.command()
+@alert.command(name="download")
 @click.argument("start_date")
 @click.argument("end_date")
 def download_alert_archive(start_date, end_date):
@@ -27,12 +29,12 @@ def download_alert_archive(start_date, end_date):
         end_date += "UTC"
     get_alerts_targz(start_date, end_date)
 
-@alert.command()
-def list_responses():
+@alert.command(name="list")
+def list_alerts():
     validate_paths()
     print(os.listdir(alerts_responses_base_folder))
 
-@alert.command()
+@alert.command(name="extract")
 @click.argument(
     "date_folder",
     required=False,
@@ -47,9 +49,9 @@ def extract_alert_archive(date_folder):
         alerts_responses_base_folder,
         date_folder
     )
-    extract_aemet_response(target_folder)
+    extract_aemet_response(target_folder, alerts_response_file_name)
 
-@alert.command()
+@alert.command(name="csv")
 @click.argument(
     "date_folder",
     required=False,

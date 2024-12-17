@@ -2,15 +2,15 @@ import os
 import requests
 from datetime import datetime
 from aemet.constants.secrets.aemet import api_key as aemet_api_key
-import aemet.constants.aemet_alert_constants as constants
 from aemet.common.dtos.aemet_hateoas_response import AemetHateoasResponse
+import aemet.constants.aemet_stations_constants as stations_constants
+import aemet.constants.aemet_constants as constants
 
 api_key = aemet_api_key
 base_url = "https://opendata.aemet.es/opendata"
-conf_start_date = "2024-11-29T00:00:01UTC"
-conf_end_date = "2024-11-29T23:59:59UTC"
-output_folder = "{constants.response_folder}"
-output_file = constants.alerts_response_file_name
+output_folder = constants.stations_responses_path
+download_folder = constants.responses_downloaded_folder
+output_file = stations_constants.stations_response_file_name
 
 headers = {
     "Content-Type": "application/json",
@@ -30,8 +30,8 @@ def map_response(json_data):
     )
 
 def request_aemet_stations_hateoas_url():
-    alerts_path = f"/api/valores/climatologicos/inventarioestaciones/todasestaciones"
-    response = requests.get(alerts_path, headers=headers, params=params)
+    stations_path = f"{base_url}/api/valores/climatologicos/inventarioestaciones/todasestaciones"
+    response = requests.get(stations_path, headers=headers, params=params)
 
     if response.status_code == 200:
         json_data = response.json()
@@ -40,10 +40,15 @@ def request_aemet_stations_hateoas_url():
     else:
         print(f"Request failed with status code: {response.status_code}")
 
+def init_folder(date_folder):
+    os.mkdir(os.path.join(output_folder, date_folder).__str__())
+    os.mkdir(os.path.join(output_folder, date_folder, download_folder))
+
 def download_stations_from_hateoas_url(url):
     datetime_now = datetime.now()
-    now_str = datetime_now.strftime("%Y-%m-%d_%H-%M-%S")
-    output_download_file = os.path.join(output_folder, now_str, output_file)
+    folder_name = datetime_now.strftime("%Y-%m-%d_%H-%M-%S")
+    output_download_file = os.path.join(output_folder, folder_name, download_folder, output_file)
+    init_folder(folder_name)
     try:
         with requests.get(url, stream=True, params=params) as response:
             if response.status_code == 200:
@@ -57,6 +62,7 @@ def download_stations_from_hateoas_url(url):
 
 def download_all_stations():
     response = request_aemet_stations_hateoas_url()
+    print(response.__str__())
     download_stations_from_hateoas_url(response.data)
 
 if __name__ == "__main__":

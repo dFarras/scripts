@@ -1,7 +1,6 @@
 import os
 import click
 from aemet.common.operations.aemet_extractor import extract_aemet_response
-from aemet.climatology.operations.station_list import download_all_stations
 from aemet.common.components.folder_param_choice import FolderParamChoice
 from aemet.common.components.find_latest_modified_folder import get_last_modified_folder
 import aemet.constants.aemet_climatology_constants as climatology_constants
@@ -13,15 +12,7 @@ climatology_base_folder = os.path.join(constants.base_data_folder, climatology_c
 def climatology():
     pass
 
-@climatology.command()
-def download_station_list():
-    download_all_stations()
-
-@climatology.command()
-def list_stations():
-    print(os.listdir(climatology_base_folder))
-
-@climatology.command()
+@climatology.command(name="extract")
 @click.argument(
     "date_folder",
     required=False,
@@ -40,7 +31,7 @@ def extract_climatology_archive(date_folder):
         pass
     extract_aemet_response(target_folder)
 
-@climatology.command()
+@climatology.command(name="csv")
 @click.argument(
     "date_folder",
     required=False,

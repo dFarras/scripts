@@ -1,7 +1,6 @@
 from aemet.alerts.dtos.aemet_alert_csv_data import AemetAlertCsvData
 import aemet.constants.aemet_alert_constants as constants
 
-
 def extract_key_or_null(root_xml, target_key):
     try:
         return root_xml.find(target_key, namespaces=constants.alerts_xml_namespace).text
